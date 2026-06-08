@@ -8,8 +8,29 @@ env:
   BUILDX_NO_DEFAULT_ATTESTATIONS: 1
 
 on:
-  push:
-    branches: ['**']
+  workflow_call:
+    inputs:
+      from_image:
+        required: false
+        type: string
+        default: ghcr.io/aristanetworks/avd/universal
+      from_variant:
+        required: false
+        type: string
+        default: latest
+      username:
+        required: false
+        type: string
+        default: avd
+      user_id:
+        required: false
+        type: string
+        default: 1000
+      group_id:
+        required: false
+        type: string
+        default: 1000
+
 
 permissions:
   packages: write
@@ -49,8 +70,8 @@ jobs:
           UID: ${{ inputs.user_id }}
           GID: ${{ inputs.group_id }}
         with:
-          subFolder: containers
-          imageName: ghcr.io/${{ steps.gh_repo.outputs.name_lowcase }}/containers
-          imageTag: latest
+          subFolder: containers/lab
+          imageName: ghcr.io/${{ steps.gh_repo.outputs.name_lowcase }}/lab
+          imageTag: uid-${{ inputs.user_id }}
           platform: linux/arm64/v8,linux/amd64
           push: always

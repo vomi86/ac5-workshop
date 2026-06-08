@@ -49,7 +49,7 @@ jobs:
           UID: ${{ inputs.user_id }}
           GID: ${{ inputs.group_id }}
         with:
-          subFolder: containers/my_container
+          subFolder: containers
           imageName: ghcr.io/${{ steps.gh_repo.outputs.name_lowcase }}/containers
           imageTag: latest
           platform: linux/arm64/v8,linux/amd64
